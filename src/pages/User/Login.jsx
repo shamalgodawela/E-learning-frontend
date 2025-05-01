@@ -26,7 +26,7 @@ const Login = () => {
         toast.success("Login successful!", {
           position: "top-center",
           autoClose: 1500,
-          onClose: () => navigate("/Home"),
+          onClose: () => navigate("/post"),
         });
       }
     } catch (err) {

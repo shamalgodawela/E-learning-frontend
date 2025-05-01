@@ -29,10 +29,10 @@ const Header = () => {
           <div className="hidden lg:flex items-center justify-between py-4">
             <a href="#" className="text-white text-xl font-semibold">Online E-Learning System</a>
             <div className="flex items-center space-x-6">
-              <a href="" className="text-white hover:bg-purple-600 px-4 py-2 rounded">Home</a>
-              <a href="/products" className="text-white hover:bg-purple-600 px-4 py-2 rounded">Study Groups</a>
-              <a href="/Allpayment" className="text-white hover:bg-purple-600 px-4 py-2 rounded">Create Post</a>
-              <a href="/AddpreOrder" className="text-white hover:bg-purple-600 px-4 py-2 rounded">Add Learning system</a>
+              <a href="/post" className="text-white hover:bg-purple-600 px-4 py-2 rounded">Home</a>
+              <a href="/AllGroup" className="text-white hover:bg-purple-600 px-4 py-2 rounded">Study Groups</a>
+              <a href="/create" className="text-white hover:bg-purple-600 px-4 py-2 rounded">Create Post</a>
+              <a href="/CreateProgress" className="text-white hover:bg-purple-600 px-4 py-2 rounded">Add Learning system</a>
               <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded shadow">
   <a href="/" className="block w-full h-full">Logout</a>
 </button>

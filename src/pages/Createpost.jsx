@@ -9,6 +9,9 @@ import { useState } from "react";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
 
 export default function CreateBeutyshop() {
   const [file, setFile] = useState(null);
@@ -84,18 +87,30 @@ export default function CreateBeutyshop() {
   };
 
   return (
+    <div>
+      <Header/>
    
-    <div className="bg-[#d9d9da]">
-      <h1 className="text-center text-3xl my-7 ml-10 font-medium">Create Post</h1>
+    <div className="bg-[#d9d9da] relative ">
+
+
+   
+
+<img src="https://images.pexels.com/photos/5965698/pexels-photo-5965698.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" className="w-full h-[700px] opacity-95 object-cover " />
+
+
+<div className="absolute transform -translate-x-0 translate-y-0 top-1  ml-6 ">
+
+
+      <h1 className="text-center text-3xl ml-10 font-serif  mt-9">Create Post</h1>
       <div className="flex justify-center items-center">
 
      
-      <form className="flex flex-col gap-4 w-[600px]  rounded-lg border-none  bg-gray-50  mb-10 mt-5" onSubmit={handleSubmit}>
+      <form className="flex flex-col gap-4 w-[600px]   rounded-lg   bg-gray-50 bg-opacity-30 border  mb-10 mt-5" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 ">
           <div className="flex gap-4 items-center justify-between border-none p-3">
-          <label htmlFor="uploadInput" className="bg-white w-48 h-20 hover:bg-[#d9d9da] border rounded-xl cursor-pointer">
+          <label htmlFor="uploadInput" className="bg-white bg-opacity-90 w-48 h-20 hover:bg-[#d9d9da] border rounded-xl cursor-pointer">
             <div className="mt-5">
-            <span className="text-2xl  ml-16 text-gray-700 font-medium text-opacity-50 ">Click</span>
+            <span className="text-2xl  ml-16 text-gray-700 font-medium text-opacity-50 ">Photo</span>
             </div>
      
       <input
@@ -108,7 +123,9 @@ export default function CreateBeutyshop() {
     </label>
     <button
       type="button"
-      className="w-28 h-8 font-medium text-sm hover:opacity-80 rounded-lg bg-gradient-to-r from-blue-500 to-blue-700  text-white"
+      className="w-28 h-8 font-medium text-sm hover:opacity-80 rounded-lg bg-gradient-to-r from-slate-500 to-blue-white border
+        
+       text-white"
       size="sm"
       onClick={handleUpdloadImage}
       disabled={imageUploadProgress}
@@ -128,7 +145,7 @@ export default function CreateBeutyshop() {
         </div>
         <div className="flex justify-center items-center">
         <input
-          className=" bg-white border-none  h-10 rounded-md w-[450px] text-slate-800"
+          className=" bg-white bg-opacity-90 border-none  h-10 rounded-md w-[450px] text-slate-800"
           type="text"
           placeholder=" Title"
           required
@@ -147,7 +164,7 @@ export default function CreateBeutyshop() {
           <img
             src={formData.image}
             alt="upload"
-            className="w-full h-72 object-cover"
+            className="w-56 h-20 object-cover"
           />
         )}
 
@@ -158,14 +175,14 @@ export default function CreateBeutyshop() {
             required
             id="content"
             maxLength={100}
-            className="bg-white border-none rounded-md w-[400px] ml-[100px] text-slate-800 h-48"
+            className="bg-white bg-opacity-90 border-none rounded-md w-[400px] ml-[100px] text-slate-800 h-48"
             onChange={(e) => setFormData({ ...formData, content: e.target.value })}
           />
         </div>
            <div className="flex justify-center items-center mb-11">
            <button
           type="submit"
-          className=" w-[200px] font-medium text-white  h-10 bg-gradient-to-r from-blue-500 to-blue-800 hover:opacity-80 hover:text-white rounded-lg"
+          className=" w-[200px] font-medium text-white  h-10 bg-gradient-to-r from-slate-500 to-blue-white border hover:opacity-80 hover:text-white rounded-lg"
         >
           Post
         </button>
@@ -180,6 +197,10 @@ export default function CreateBeutyshop() {
         )}
       </form>
       </div>
+
+  </div>
+    </div>
+    <Footer/>
     </div>
    
   );
