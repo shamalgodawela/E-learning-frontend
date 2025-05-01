@@ -12,14 +12,14 @@ const Footer = () => {
             <FaMapMarkerAlt className="text-orange-500 text-2xl mt-1" />
             <div>
               <h4 className="text-lg font-semibold">Find us</h4>
-              <span className="text-gray-400 text-sm">1010 Avenue, sw 54321, Chandigarh</span>
+              <span className="text-gray-400 text-sm">SLIIT</span>
             </div>
           </div>
           <div className="flex items-start gap-4">
             <FaPhone className="text-orange-500 text-2xl mt-1" />
             <div>
               <h4 className="text-lg font-semibold">Call us</h4>
-              <span className="text-gray-400 text-sm">9876543210 0</span>
+              <span className="text-gray-400 text-sm">076543210</span>
             </div>
           </div>
           <div className="flex items-start gap-4">
@@ -33,9 +33,9 @@ const Footer = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-10">
           <div>
-            <img src="https://i.ibb.co/QDy827D/ak-logo.png" alt="Logo" className="mb-4 max-w-[200px]" />
+            <img src="" alt="Logo" className="mb-4 max-w-[200px]" />
             <p className="text-gray-400 text-sm leading-7 mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Eleaning System
             </p>
             <div>
               <span className="text-lg font-bold mb-4 block">Follow us</span>
