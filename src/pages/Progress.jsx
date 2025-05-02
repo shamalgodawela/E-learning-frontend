@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function CreateSchedul() {
   const [formData, setFormData] = useState({
@@ -37,7 +37,6 @@ export default function CreateSchedul() {
 
   const handleDateChange = (e) => {
     const date = e.target.value;
-    // using native date picker, so skip regex validation
     setFormData((prev) => ({ ...prev, date }));
     setError(null);
   };
@@ -56,13 +55,15 @@ export default function CreateSchedul() {
       const data = await res.json();
       if (!res.ok) {
         setPublishError(data.message);
+        toast.error(data.message || "Submission failed");
         return;
       }
       setPublishError(null);
-      alert("Submission successful!");
+      toast.success("Submission successful!");
       navigate("/");
-    } catch {
+    } catch (err) {
       setPublishError("Something went wrong");
+      toast.error("Something went wrong");
     }
   };
 
@@ -71,8 +72,6 @@ export default function CreateSchedul() {
       <Header />
 
       <main className="flex-1 flex items-center justify-center py-12 px-4 bg-gradient-to-r from-gray-900 to-gray-800">
-        
-
         <div className="relative z-10 max-w-4xl w-full bg-white bg-opacity-90 rounded-2xl shadow-xl p-8">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold text-gray-800">
@@ -102,7 +101,6 @@ export default function CreateSchedul() {
                 className="block w-full rounded-lg border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               >
                 <option value="">Select a course…</option>
-                {/* your options here */}
                 <option>Unlocking the Basics: A Beginner’s Guide</option>
                 <option>Foundations First: Learn the Essentials</option>
                 <option>Crash Course 101: Get Started Fast</option>
@@ -256,6 +254,16 @@ export default function CreateSchedul() {
       </main>
 
       <Footer />
+
+      {/* Toast container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+      />
     </div>
-);
+  );
 }
