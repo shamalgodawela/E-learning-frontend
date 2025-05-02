@@ -85,7 +85,7 @@ export default function Myprogress() {
                 <div className="mb-4">
                   <h3 className="font-medium text-gray-700">Start Date</h3>
                   <p className="text-gray-600 text-sm">
-                    {moment(workout.date)}
+                    {moment(workout.date).format("YYYY-MM-DD HH:mm:ss")}
                   </p>
                 </div>
 
