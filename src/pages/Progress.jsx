@@ -72,13 +72,13 @@ export default function CreateSchedul() {
       <Header />
 
       <main className="flex-1 flex items-center justify-center py-12 px-4 bg-gradient-to-r from-gray-900 to-gray-800">
-        <div className="relative z-10 max-w-4xl w-full bg-white bg-opacity-90 rounded-2xl shadow-xl p-8">
+        <div className="relative z-10 max-w-4xl w-full bg-white/30 backdrop-blur-md p-6 rounded-xl shadow-lg">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-800">
+            <h2 className="text-2xl font-bold text-black">
               Create Progress
             </h2>
             <Link to="/viewprogreess">
-              <button className="text-sm font-medium text-indigo-600 hover:text-indigo-800">
+              <button className="text-lg font-medium text-blue-950 hover:text-indigo-800">
                 My Progress →
               </button>
             </Link>
@@ -89,7 +89,7 @@ export default function CreateSchedul() {
             <div>
               <label
                 htmlFor="progressState"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-black mb-1"
               >
                 Course Name
               </label>
@@ -116,7 +116,7 @@ export default function CreateSchedul() {
             <div>
               <label
                 htmlFor="date"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-black mb-1"
               >
                 Course Start Date
               </label>
@@ -137,7 +137,7 @@ export default function CreateSchedul() {
             <div>
               <label
                 htmlFor="description"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-black mb-1"
               >
                 Description
               </label>
@@ -154,7 +154,7 @@ export default function CreateSchedul() {
 
             {/* Dynamic Progress Entries */}
             <fieldset className="border-t border-b border-gray-200 py-6 space-y-6">
-              <legend className="text-lg font-semibold text-gray-800">
+              <legend className="text-lg font-semibold text-black">
                 My Learning Progress
               </legend>
               {formData.state.map((entry, idx) => (
@@ -165,7 +165,7 @@ export default function CreateSchedul() {
                   <div>
                     <label
                       htmlFor={`name-${idx}`}
-                      className="block text-sm font-medium text-gray-600"
+                      className="block text-sm font-medium text-black"
                     >
                       Day {idx + 1} Description
                     </label>
@@ -183,7 +183,7 @@ export default function CreateSchedul() {
                   <div>
                     <label
                       htmlFor={`completed-${idx}`}
-                      className="block text-sm font-medium text-gray-600"
+                      className="block text-sm font-medium text-black"
                     >
                       Hours
                     </label>
@@ -203,7 +203,7 @@ export default function CreateSchedul() {
                   <div>
                     <label
                       htmlFor={`burend_callary-${idx}`}
-                      className="block text-sm font-medium text-gray-600"
+                      className="block text-sm font-medium text-black"
                     >
                       Time per Day
                     </label>
