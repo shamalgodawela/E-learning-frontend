@@ -20,6 +20,7 @@ import {
     const [publishError, setPublishError] = useState(null);
     console.log(formData.id);
   
+    
     const navigate = useNavigate();
     const { postId } = useParams();
     useEffect(() => {
