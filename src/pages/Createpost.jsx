@@ -84,6 +84,7 @@ export default function CreateBeutyshop() {
     }
   };
 
+  
   return (
     <div>
       <Header />
