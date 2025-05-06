@@ -84,7 +84,7 @@ export default function CreateBeutyshop() {
     }
   };
 
-  
+
   return (
     <div>
       <Header />
@@ -128,6 +128,7 @@ export default function CreateBeutyshop() {
                         className="hidden"
                         onChange={(e) => setFile(e.target.files[0])}
                       />
+                      
                     </label>
                     <button
                       type="button"
