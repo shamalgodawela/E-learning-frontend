@@ -27,6 +27,8 @@ export default function SharePost() {
     fetchWorkout();
   }, [ShareId]);
 
+
+  //change the some part
   const handleLike = async () => {
     try {
       const res = await fetch(`http://localhost:8081/api/like/${ShareId}`, {
