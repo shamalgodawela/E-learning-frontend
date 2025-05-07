@@ -44,7 +44,7 @@ export default function SharePost() {
       console.error("Error liking post:", error);
     }
   };
-//share
+//shar
   const handleShare = () => {
     const postLink = window.location.href;
     navigator.clipboard.writeText(postLink)
