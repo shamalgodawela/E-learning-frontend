@@ -88,6 +88,8 @@ export default function Post() {
     }
   };
 
+
+  // edit the comment
   const handleEditComment = async (postId, commentId) => {
     try {
       const res = await fetch(
