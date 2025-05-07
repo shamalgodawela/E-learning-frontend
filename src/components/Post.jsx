@@ -48,6 +48,7 @@ export default function Post() {
     }
   };
 
+  // handle like 
   const handleLike = async (postId) => {
     try {
       const res = await fetch(`http://localhost:8081/api/like/${postId}`, {
