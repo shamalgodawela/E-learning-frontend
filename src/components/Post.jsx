@@ -69,6 +69,7 @@ export default function Post() {
     }
   };
 
+  //comment
   const handleComment = async (postId, commentText) => {
     try {
       const res = await fetch(`http://localhost:8081/api/comment/${postId}`, {
