@@ -1,229 +1,269 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-
-
-
-
 export default function CreateSchedul() {
-    const [formData, setFormData] = useState({
-      progressState: "",
-        description: "",
-        date: "",
-        state: [],
-      });
-  
-  
+  const [formData, setFormData] = useState({
+    progressState: "",
+    description: "",
+    date: "",
+    state: [],
+  });
   const [publishError, setPublishError] = useState(null);
-  const [Error, setError] = useState(null);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  console.log(formData)
 
   const handleChange = (e) => {
     const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value.trim() });
+    setFormData((prev) => ({ ...prev, [id]: value.trim() }));
   };
 
-  const handleExerciseChange = (index, field, value) => {
-    const updatedState = [...formData.state];
-    updatedState[index][field] = value.trim();
-    setFormData({ ...formData, state: updatedState });
+  const handleExerciseChange = (idx, field, val) => {
+    const updated = formData.state.map((item, i) =>
+      i === idx ? { ...item, [field]: val.trim() } : item
+    );
+    setFormData((prev) => ({ ...prev, state: updated }));
   };
 
   const handleAddExercise = () => {
-    setFormData({
-      ...formData,
-      state: [...formData.state, { name: "", completed: "", burend_callary: "" }],
-    });
+    setFormData((prev) => ({
+      ...prev,
+      state: [...prev.state, { name: "", completed: "", burend_callary: "" }],
+    }));
+  };
+
+  const handleDateChange = (e) => {
+    const date = e.target.value;
+    setFormData((prev) => ({ ...prev, date }));
+    setError(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-
     try {
-
-
-      
-
-
       const res = await fetch("http://localhost:8081/api/CreateProgress", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          date: new Date(formData.date).toISOString(), // Convert date to ISO format
-      }),
-
+          date: new Date(formData.date).toISOString(),
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
         setPublishError(data.message);
+        toast.error(data.message || "Submission failed");
         return;
       }
-
-      if (res.ok) {
-        setPublishError(null);
-        navigate(``);
-        alert("successfull");
-      }
-    } catch (error) {
+      setPublishError(null);
+      toast.success("Submission successful!");
+      navigate("/");
+    } catch (err) {
       setPublishError("Something went wrong");
+      toast.error("Something went wrong");
     }
   };
-
- 
-  const handleDateChange = (e) => {
-    const date = e.target.value.trim(); // Remove leading/trailing spaces
-    const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/\d{2}$/;
-  
-    if (!datePattern.test(date)) {
-      setError("Invalid date format. Please use mm/dd/yy format.");
-    } else {
-      setFormData({ ...formData, date: date });
-      setError(null); // Clear error message if date is valid
-    }
-  };
-
- 
- 
-  
-  
-  
 
   return (
-    <div>
-      <Header/>
-    <div className=" relative ">
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Header />
 
-<img src="https://images.pexels.com/photos/5965698/pexels-photo-5965698.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" className="w-full h-[700px] opacity-95 object-cover " />
+      <main className="flex-1 flex items-center justify-center py-12 px-4 bg-gradient-to-r from-gray-900 to-gray-800">
+        <div className="relative z-10 max-w-4xl w-full bg-white/30 backdrop-blur-md p-6 rounded-xl shadow-lg">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-black">
+              Create Progress
+            </h2>
+            <Link to="/viewprogreess">
+              <button className="text-lg font-medium text-blue-950 hover:text-indigo-800">
+                My Progress →
+              </button>
+            </Link>
+          </div>
 
-<div className="absolute transform -translate-x-0 translate-y-0 top-1  ml-[800px] ">
-        <div className=" mt-2  ml-[-780px]">
-
-        
-      
-      <Link to="/viewprogreess">
-        <button className="bg-gradient-to-r from-slate-500 to-blue-white   bg-opacity-80  shadow-slate-400 w-32 h-10 border  border-slate-300 rounded-lg text-white hover:opacity-85 ml-[800px]  font-extralight  text-opacity-75">My progress</button>
-        </Link>
-        </div>
-        
-        
-      
-       
-      <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
-
-        
-          <div className="w-[550px] h-[600px]  border bg-white bg-opacity-30 rounded-lg  relative z-10">
-        <div className="flex justify-center items-center mt-6">
-          <form className="flex flex-col  gap-4" onSubmit={handleSubmit} >
-            
-         
-            
-            
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            {/* Course Name */}
             <div>
-            <h3 className="font-semibold text-black ml-1">Course Name</h3>
-            <select
-               className=" bg-slate-100 p-3 rounded-lg w-[200px] bg-opacity-80 h-14"
-          
-            id="progressState"
-            onChange={handleChange}
-            required
-          >
-             <option className="font-serif text-white bg-opacity-80" value="">Select</option>
-            <option value="Unlocking the Basics: A Beginner’s Guide">Unlocking the Basics: A Beginner’s Guide</option>
-            <option value="Foundations First: Learn the Essentials">Foundations First: Learn the Essentials</option>
-            <option value="Crash Course 101: Get Started Fast">Crash Course 101: Get Started Fast</option>
-    <option value="Skill Sprint: Learn in an Hour">Skill Sprint: Learn in an Hour</option>
-    <option value="Demo Masterclass: See It in Action">Demo Masterclass: See It in Action</option>
-    <option value="Try & Learn: Interactive Demo Course">Try & Learn: Interactive Demo Course</option>
-    <option value="QuickStart Demo: [Skill/Topic] Edition">QuickStart Demo:Edition</option>
-    <option value="Fast Track Fundamentals">Fast Track Fundamentals</option>
-    
-          </select>
+              <label
+                htmlFor="progressState"
+                className="block text-sm font-medium text-black mb-1"
+              >
+                Course Name
+              </label>
+              <select
+                id="progressState"
+                onChange={handleChange}
+                value={formData.progressState}
+                required
+                className="block w-full rounded-lg border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              >
+                <option value="">Select a course…</option>
+                <option>Unlocking the Basics: A Beginner’s Guide</option>
+                <option>Foundations First: Learn the Essentials</option>
+                <option>Crash Course 101: Get Started Fast</option>
+                <option>Skill Sprint: Learn in an Hour</option>
+                <option>Demo Masterclass: See It in Action</option>
+                <option>Try & Learn: Interactive Demo Course</option>
+                <option>QuickStart Demo: Edition</option>
+                <option>Fast Track Fundamentals</option>
+              </select>
             </div>
 
+            {/* Date */}
             <div>
-             <h3 className="font-semibold text-black ml-1 ">Course Start Date</h3>
-
-
+              <label
+                htmlFor="date"
+                className="block text-sm font-medium text-black mb-1"
+              >
+                Course Start Date
+              </label>
               <input
-               className=" bg-slate-100 p-3 bg-opacity-80 rounded-lg w-[460px] h-11"
-                type="date"
-                placeholder=""
                 id="date"
+                type="date"
+                value={formData.date}
+                onChange={handleDateChange}
                 required
-                maxLength={80}
-              
-                onChange={handleChange}
-                />
-                 {Error && (
-            <p className="mt-5 text-red-800 font-serif text-opacity-50  w-300 h-7 rounded-lg text-center ">
-              {Error}
-            </p>)}
+                className="block w-full rounded-lg border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              />
+              {error && (
+                <p className="mt-1 text-sm text-red-600">{error}</p>
+              )}
             </div>
+
+            {/* Description */}
             <div>
-             <h3 className="font-semibold text-black ml-1 ">Description</h3>
-
-
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-black mb-1"
+              >
+                Description
+              </label>
               <textarea
-               className=" bg-slate-100 p-3 bg-opacity-80 rounded-lg w-[460px] h-20"
-                type="text"
-                placeholder=""
                 id="description"
-                required
-                maxLength={1000}
-              
+                rows={3}
+                value={formData.description}
                 onChange={handleChange}
+                maxLength={1000}
+                required
+                className="block w-full rounded-lg border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               />
             </div>
-          <div className="flex justify-center items-center bg-white rounded-xl opacity-80">
-            <h3 className="font-serif text-xl text-black ml-1 "> My Learning Progress</h3>
-            </div>
-            <div className="max-h-36 overflow-y-auto  scrollbar-none">
 
-            {formData.state.map((exercise, index) => (
-                <div key={index}>
-                  <h3 className="font-semibold text-gray-600 ml-1">Day {index + 1}</h3>
-                  <div className="flex gap-4 mt-4">
-                    <input className="bg-slate-100 p-3 rounded-lg w-[150px] h-11 bg-opacity-80" type="text"  value={exercise.name} placeholder=" short description " onChange={(e) => handleExerciseChange(index, "name", e.target.value)}  />
-                    <input className="bg-slate-100 p-3 rounded-lg w-[130px] h-11 bg-opacity-80" type="text"  maxLength={2} value={exercise.completed} placeholder="hours" onChange={(e) => handleExerciseChange(index, "completed", e.target.value)}  />
-                    <input className="bg-slate-100 p-3 rounded-lg w-[150px] h-11 bg-opacity-80" type="text" maxLength={3} value={exercise.burend_callary} placeholder=" time per day" onChange={(e) => handleExerciseChange(index, "burend_callary", e.target.value)}  />
+            {/* Dynamic Progress Entries */}
+            <fieldset className="border-t border-b border-gray-200 py-6 space-y-6">
+              <legend className="text-lg font-semibold text-black">
+                My Learning Progress
+              </legend>
+              {formData.state.map((entry, idx) => (
+                <div
+                  key={idx}
+                  className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end"
+                >
+                  <div>
+                    <label
+                      htmlFor={`name-${idx}`}
+                      className="block text-sm font-medium text-black"
+                    >
+                      Day {idx + 1} Description
+                    </label>
+                    <input
+                      id={`name-${idx}`}
+                      type="text"
+                      placeholder="Short description"
+                      value={entry.name}
+                      onChange={(e) =>
+                        handleExerciseChange(idx, "name", e.target.value)
+                      }
+                      className="mt-1 block w-full rounded-lg border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor={`completed-${idx}`}
+                      className="block text-sm font-medium text-black"
+                    >
+                      Hours
+                    </label>
+                    <input
+                      id={`completed-${idx}`}
+                      type="number"
+                      min="0"
+                      max="24"
+                      placeholder="0"
+                      value={entry.completed}
+                      onChange={(e) =>
+                        handleExerciseChange(idx, "completed", e.target.value)
+                      }
+                      className="mt-1 block w-full rounded-lg border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor={`burend_callary-${idx}`}
+                      className="block text-sm font-medium text-black"
+                    >
+                      Time per Day
+                    </label>
+                    <input
+                      id={`burend_callary-${idx}`}
+                      type="text"
+                      placeholder="e.g. 30m"
+                      maxLength={5}
+                      value={entry.burend_callary}
+                      onChange={(e) =>
+                        handleExerciseChange(
+                          idx,
+                          "burend_callary",
+                          e.target.value
+                        )
+                      }
+                      className="mt-1 block w-full rounded-lg border-gray-300 py-2 px-3 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    />
                   </div>
                 </div>
               ))}
-              </div>
-          
-          <button className="bg-gradient-to-r from-slate-500 to-blue-white border bg-opacity-80 border-slate-300 shadow-xl shadow-slate-400 text-white p-3 rounded-lg w-[460px] h-11 font-serif text-opacity-90 hover:opacity-90" type="button" onClick={handleAddExercise}>Add progress</button>
-            <button
-              className=" bg-gradient-to-r from-slate-500 to-blue-white  bg-opacity-80 text-white border border-slate-300 shadow-xl shadow-slate-400 font-serif  text-opacity-90 p-3 rounded-lg w-[460px] h-11 hover:opacity-90"
-              type="submit"
-             
-            >
-             submit 
-            </button>
 
-            {publishError && (
-            <p className="mt-5 text-red-800 font-serif text-opacity-50  w-300 h-7 rounded-lg text-center ">
-              {publishError}
-            </p>
-          )}
-          
+              <button
+                type="button"
+                onClick={handleAddExercise}
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg shadow-sm text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                + Add Day
+              </button>
+            </fieldset>
+
+            {/* Submit */}
+            <div>
+              <button
+                type="submit"
+                className="w-full flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                Submit Progress
+              </button>
+              {publishError && (
+                <p className="mt-2 text-center text-sm text-red-600">
+                  {publishError}
+                </p>
+              )}
+            </div>
           </form>
-          
-         
-         
         </div>
-        </div>
-      </div>
-</div>
+      </main>
 
-    </div>
-     <Footer/>
+      <Footer />
+
+      {/* Toast container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+      />
     </div>
   );
 }
