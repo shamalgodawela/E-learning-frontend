@@ -27,6 +27,8 @@ export default function SharePost() {
     fetchWorkout();
   }, [ShareId]);
 
+
+  //change the some part
   const handleLike = async () => {
     try {
       const res = await fetch(`http://localhost:8081/api/like/${ShareId}`, {
@@ -42,7 +44,7 @@ export default function SharePost() {
       console.error("Error liking post:", error);
     }
   };
-
+//shar
   const handleShare = () => {
     const postLink = window.location.href;
     navigator.clipboard.writeText(postLink)
