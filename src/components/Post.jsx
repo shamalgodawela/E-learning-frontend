@@ -33,6 +33,7 @@ export default function Post() {
     fetchItems();
   }, []);
 
+  //done
   const handleDeleteUser = async (postId) => {
     try {
       const res = await fetch(`http://localhost:8081/api/delete/${postId}`, {
@@ -47,6 +48,7 @@ export default function Post() {
     }
   };
 
+  // handle like 
   const handleLike = async (postId) => {
     try {
       const res = await fetch(`http://localhost:8081/api/like/${postId}`, {
@@ -67,6 +69,7 @@ export default function Post() {
     }
   };
 
+  //comment
   const handleComment = async (postId, commentText) => {
     try {
       const res = await fetch(`http://localhost:8081/api/comment/${postId}`, {
@@ -85,6 +88,8 @@ export default function Post() {
     }
   };
 
+
+  // edit the comment
   const handleEditComment = async (postId, commentId) => {
     try {
       const res = await fetch(
