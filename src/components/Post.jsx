@@ -33,6 +33,7 @@ export default function Post() {
     fetchItems();
   }, []);
 
+  //done
   const handleDeleteUser = async (postId) => {
     try {
       const res = await fetch(`http://localhost:8081/api/delete/${postId}`, {
