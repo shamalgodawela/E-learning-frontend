@@ -9,6 +9,7 @@ import {
   import { CircularProgressbar } from "react-circular-progressbar";
   import "react-circular-progressbar/dist/styles.css";
   import { useNavigate, useParams } from "react-router-dom";
+  
 
 
   export default function CreateBeutyshop() {
@@ -19,6 +20,7 @@ import {
     const [publishError, setPublishError] = useState(null);
     console.log(formData.id);
   
+    
     const navigate = useNavigate();
     const { postId } = useParams();
     useEffect(() => {
