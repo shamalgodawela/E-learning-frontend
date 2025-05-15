@@ -53,6 +53,7 @@ export default function CreateBeutyshop() {
       );
     
       
+      
 } catch (error) {
       setImageUploadError("Image upload failed");
       setImageUploadProgress(null);
