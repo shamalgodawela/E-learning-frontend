@@ -52,11 +52,13 @@ export default function CreateBeutyshop() {
         }
       );
     
-      } catch (error) {
+      
+} catch (error) {
       setImageUploadError("Image upload failed");
       setImageUploadProgress(null);
       console.log(error);
     }
+
   };
 
   const handleSubmit = async (e) => {
