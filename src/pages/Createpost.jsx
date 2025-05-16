@@ -51,11 +51,16 @@ export default function CreateBeutyshop() {
           });
         }
       );
-    } catch (error) {
+    
+      
+
+      
+} catch (error) {
       setImageUploadError("Image upload failed");
       setImageUploadProgress(null);
       console.log(error);
     }
+
   };
 
   const handleSubmit = async (e) => {
@@ -73,6 +78,7 @@ export default function CreateBeutyshop() {
         setPublishError(data.message);
         return;
       }
+
 
       if (res.ok) {
         setPublishError(null);
@@ -128,6 +134,7 @@ export default function CreateBeutyshop() {
                         className="hidden"
                         onChange={(e) => setFile(e.target.files[0])}
                       />
+                      
                       
                     </label>
                     <button
