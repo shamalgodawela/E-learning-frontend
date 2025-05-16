@@ -35,9 +35,13 @@ export default function CreateSchedul() {
     }));
   };
 
+  
   const handleDateChange = (e) => {
     const date = e.target.value;
-    setFormData((prev) => ({ ...prev, date }));
+    setFormData((prev) => ({ 
+      ...prev,
+       date
+       }));
     setError(null);
   };
 
