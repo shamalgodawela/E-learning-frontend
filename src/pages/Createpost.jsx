@@ -79,7 +79,7 @@ export default function CreateBeutyshop() {
         return;
       }
 
-      
+
       if (res.ok) {
         setPublishError(null);
         alert("success");
@@ -134,6 +134,7 @@ export default function CreateBeutyshop() {
                         className="hidden"
                         onChange={(e) => setFile(e.target.files[0])}
                       />
+                      
                       
                     </label>
                     <button
