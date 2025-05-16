@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -17,10 +19,15 @@ export default function Myprogress() {
       try {
         const res = await fetch(`http://localhost:8081/api/Progress`);
         const data = await res.json();
-        if (res.ok) setWorkouts(data);
+        if (res.ok) {
+          setWorkouts(data);
+        } else {
+          throw new Error(data.message || "Failed to load progress.");
+        }
       } catch (err) {
         console.error(err.message);
         setError("Failed to load progress.");
+        toast.error("Failed to load progress.");
       }
     };
     fetchItems();
@@ -37,18 +44,30 @@ export default function Myprogress() {
         setWorkouts((prev) =>
           prev.filter((workout) => workout.id !== itemToDelete)
         );
-        alert("Deleted successfully");
+        toast.success("Deleted successfully");
       } else {
         console.error(data.message);
+        toast.error(data.message || "Delete failed");
       }
     } catch (err) {
       console.error(err.message);
+      toast.error("Delete request failed");
     }
   };
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-gray-900 to-gray-800">
       <Header />
+
+      {/* Toast container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+      />
 
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-6">
