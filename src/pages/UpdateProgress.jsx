@@ -11,7 +11,7 @@ export default function CreateSchedul() {
         state: [],
       });
   
-      const { workId } = useParams();
+  const { workId } = useParams();
   const [publishError, setPublishError] = useState(null);
   const [Error, setError] = useState(null);
   const navigate = useNavigate();
@@ -148,16 +148,42 @@ export default function CreateSchedul() {
             value={formData.progressState}
             required
           >
-             <option className="font-serif bg-opacity-80" value="">Select</option>
-             <option className="font-serif text-white bg-opacity-80" value="">Select</option>
-            <option value="Unlocking the Basics: A Beginner’s Guide">Unlocking the Basics: A Beginner’s Guide</option>
-            <option value="Foundations First: Learn the Essentials">Foundations First: Learn the Essentials</option>
-            <option value="Crash Course 101: Get Started Fast">Crash Course 101: Get Started Fast</option>
-    <option value="Skill Sprint: Learn in an Hour">Skill Sprint: Learn in an Hour</option>
-    <option value="Demo Masterclass: See It in Action">Demo Masterclass: See It in Action</option>
-    <option value="Try & Learn: Interactive Demo Course">Try & Learn: Interactive Demo Course</option>
-    <option value="QuickStart Demo: [Skill/Topic] Edition">QuickStart Demo:Edition</option>
-    <option value="Fast Track Fundamentals">Fast Track Fundamentals</option>
+             <select className="font-serif bg-opacity-80 text-white p-2 rounded">
+        <option value="" disabled selected>
+          Select a Course…
+        </option>
+        <option value="Unlocking the Basics: A Beginner’s Guide">
+          Unlocking the Basics: A Beginner’s Guide
+        </option>
+        <option value="Foundations First: Learn the Essentials">
+          Foundations First: Learn the Essentials
+        </option>
+        <option value="Crash Course 101: Get Started Fast">
+          Crash Course 101: Get Started Fast
+        </option>
+        <option value="Skill Sprint: Master in an Hour">
+          Skill Sprint: Master in an Hour
+        </option>
+        <option value="Demo Deep Dive: See It in Action">
+          Demo Deep Dive: See It in Action
+        </option>
+        <option value="QuickStart Reactive JS Edition">
+          QuickStart Reactive JS Edition
+        </option>
+        <option value="Fast Track Fundamentals of Kotlin">
+          Fast Track Fundamentals of Kotlin
+        </option>
+        <option value="Intro to Machine Learning: Hands-On">
+          Intro to Machine Learning: Hands-On
+        </option>
+        <option value="Data Visualization with D3.js">
+          Data Visualization with D3.js
+        </option>
+        <option value="Building REST APIs with Node.js">
+          Building REST APIs with Node.js
+        </option>
+</select>
+
     
           </select>
             </div>
