@@ -53,7 +53,7 @@ export default function CreateBeutyshop() {
       );
     
       
-      
+
       
 } catch (error) {
       setImageUploadError("Image upload failed");
@@ -79,6 +79,7 @@ export default function CreateBeutyshop() {
         return;
       }
 
+      
       if (res.ok) {
         setPublishError(null);
         alert("success");
