@@ -131,7 +131,7 @@ export default function Myprogress() {
 
               <div className="px-6 py-4 bg-gray-50 flex justify-between">
                 <Link to={`/updateworkout/${workout.id}`}>
-                  <button className="px-3 py-1 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 focus:outline-none">
+                  <button className="px-3 py-1 bg-green-400 text-white rounded-lg shadow hover:bg-green-600 focus:outline-none">
                     Edit
                   </button>
                 </Link>
@@ -140,7 +140,7 @@ export default function Myprogress() {
                     setItemToDelete(workout.id);
                     handleDeleteUser();
                   }}
-                  className="px-3 py-1 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 focus:outline-none"
+                  className="px-3 py-1 bg-red-400 text-yellow-50 rounded-lg shadow hover:bg-red-600 focus:outline-none"
                 >
                   Delete
                 </button>
