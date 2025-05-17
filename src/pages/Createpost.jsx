@@ -12,18 +12,16 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-
 export default function CreateBeutyshop() {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
-  console.log(formData);
 
   const navigate = useNavigate();
 
-  const handleUpdloadImage = async () => {
+  const handleUploadImage = async () => {
     try {
       if (!file) {
         setImageUploadError("Please select an image");
@@ -34,14 +32,14 @@ export default function CreateBeutyshop() {
       const fileName = new Date().getTime() + "-" + file.name;
       const storageRef = ref(storage, fileName);
       const uploadTask = uploadBytesResumable(storageRef, file);
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setImageUploadProgress(progress.toFixed(0));
         },
-        (error) => {
+        () => {
           setImageUploadError("Image upload failed");
           setImageUploadProgress(null);
         },
@@ -49,8 +47,8 @@ export default function CreateBeutyshop() {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setImageUploadProgress(null);
             setImageUploadError(null);
-            setFormData({ ...formData, image: [downloadURL] }); // Note the array brackets
-        });
+            setFormData((prev) => ({ ...prev, image: [downloadURL] }));
+          });
         }
       );
     } catch (error) {
@@ -65,9 +63,7 @@ export default function CreateBeutyshop() {
     try {
       const res = await fetch("http://localhost:8081/api/create", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
@@ -75,136 +71,138 @@ export default function CreateBeutyshop() {
         setPublishError(data.message);
         return;
       }
-
-      if (res.ok) {
-        setPublishError(null);
-        alert("success");
-        navigate(``);
-      }
-    } catch (error) {
+      setPublishError(null);
+      alert("Post created successfully!");
+      navigate(`/post`);
+    } catch {
       setPublishError("Something went wrong");
     }
   };
 
   return (
-    <div>
-      <Header/>
-   
-    <div className="bg-[#d9d9da] relative ">
+    <div className="min-h-screen flex flex-col">
+      <Header />
 
-
-   
-
-<img src="https://images.pexels.com/photos/5965698/pexels-photo-5965698.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" className="w-full h-[700px] opacity-95 object-cover " />
-
-
-<div className="absolute transform -translate-x-0 translate-y-0 top-1  ml-6 ">
-
-
-      <h1 className="text-center text-3xl ml-10 font-serif  mt-9">Create Post</h1>
-      <div className="flex justify-center items-center">
-
-     
-      <form className="flex flex-col gap-4 w-[600px]   rounded-lg   bg-gray-50 bg-opacity-30 border  mb-10 mt-5" onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-4 ">
-          <div className="flex gap-4 items-center justify-between border-none p-3">
-          <label htmlFor="uploadInput" className="bg-white bg-opacity-90 w-48 h-20 hover:bg-[#d9d9da] border rounded-xl cursor-pointer">
-            <div className="mt-5">
-            <span className="text-2xl  ml-16 text-gray-700 font-medium text-opacity-50 ">Photo</span>
-            </div>
-     
-      <input
-        id="uploadInput"
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
-    </label>
-    <button
-      type="button"
-      className="w-28 h-8 font-medium text-sm hover:opacity-80 rounded-lg bg-gradient-to-r from-slate-500 to-blue-white border
-        
-       text-white"
-      size="sm"
-      onClick={handleUpdloadImage}
-      disabled={imageUploadProgress}
-    >
-      {imageUploadProgress ? (
-        <div className="w-16 h-16">
-          <CircularProgressbar
-            value={imageUploadProgress}
-            text={`${imageUploadProgress || 0}%`}
-          />
-        </div>
-      ) : (
-        "Upload Image"
-      )}
-    </button>
-          </div>
-        </div>
-        <div className="flex justify-center items-center">
-        <input
-          className=" bg-white bg-opacity-90 border-none  h-10 rounded-md w-[450px] text-slate-800"
-          type="text"
-          placeholder=" Title"
-          required
-          id="title"
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+      <main className="flex-grow relative bg-gray-100">
+        <img
+          src="https://images.pexels.com/photos/5965698/pexels-photo-5965698.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+          alt="Background"
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
+          aria-hidden="true"
         />
+
+        <div className="relative max-w-4xl mx-auto p-8 bg-white bg-opacity-90 rounded-xl shadow-lg mt-12 mb-16">
+          <h1 className="text-4xl font-serif font-semibold text-center mb-8 text-gray-900">
+            Create Post
+          </h1>
+
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            {/* Image Upload */}
+            <div className="flex items-center space-x-6">
+              <label
+                htmlFor="uploadInput"
+                className="cursor-pointer inline-block rounded-xl border border-gray-300 p-3 bg-white shadow hover:bg-gray-50 transition"
+                title="Select image to upload"
+              >
+                <input
+                  id="uploadInput"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => setFile(e.target.files[0])}
+                />
+                <div className="flex flex-col items-center justify-center">
+                  <svg
+                    className="w-10 h-10 text-gray-400 mb-1"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                    />
+                  </svg>
+                  <span className="text-gray-500 text-sm select-none">Choose Image</span>
+                </div>
+              </label>
+
+              <button
+                type="button"
+                className="flex items-center justify-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 transition disabled:opacity-50"
+                onClick={handleUploadImage}
+                disabled={!!imageUploadProgress}
+              >
+                {imageUploadProgress ? (
+                  <div className="w-12 h-12">
+                    <CircularProgressbar
+                      value={imageUploadProgress}
+                      text={`${imageUploadProgress}%`}
+                      styles={{
+                        path: { stroke: "#4f46e5" },
+                        text: { fill: "#4f46e5", fontSize: "20px" },
+                      }}
+                    />
+                  </div>
+                ) : (
+                  "Upload Image"
+                )}
+              </button>
+            </div>
+
+            {imageUploadError && (
+              <p className="text-center text-red-600 font-medium">{imageUploadError}</p>
+            )}
+
+            {/* Preview uploaded image */}
+            {formData.image && formData.image.length > 0 && (
+              <div className="flex justify-center">
+                <img
+                  src={formData.image[0]}
+                  alt="Uploaded Preview"
+                  className="w-48 h-32 rounded-lg object-cover shadow-md"
+                />
+              </div>
+            )}
+
+            {/* Title */}
+            <input
+              type="text"
+              placeholder="Title"
+              required
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 placeholder-gray-400"
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            />
+
+            {/* Content */}
+            <textarea
+              placeholder="Content (max 100 characters)"
+              maxLength={100}
+              required
+              rows={6}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-gray-900 placeholder-gray-400 resize-none"
+              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+            />
+
+            {publishError && (
+              <p className="text-center text-red-600 font-semibold">{publishError}</p>
+            )}
+
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="w-48 py-3 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg transition focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                Post
+              </button>
+            </div>
+          </form>
         </div>
-        
+      </main>
 
-        {imageUploadError && (
-          <p className="mt-5 text-red-600   h-7 rounded-lg text-center ">
-            {imageUploadError}
-          </p>
-        )}
-        {formData.image && (
-          <img
-            src={formData.image}
-            alt="upload"
-            className="w-56 h-20 object-cover"
-          />
-        )}
-
-        <div className="flex gap-4">
-          <textarea
-            type="text"
-            placeholder="Content"
-            required
-            id="content"
-            maxLength={100}
-            className="bg-white bg-opacity-90 border-none rounded-md w-[400px] ml-[100px] text-slate-800 h-48"
-            onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-          />
-        </div>
-           <div className="flex justify-center items-center mb-11">
-           <button
-          type="submit"
-          className=" w-[200px] font-medium text-white  h-10 bg-gradient-to-r from-slate-500 to-blue-white border hover:opacity-80 hover:text-white rounded-lg"
-        >
-          Post
-        </button>
-
-           </div>
-        
-
-        {publishError && (
-          <p className="mt-5 text-red-600 bg-red-300 w-300 h-7 rounded-lg text-center ">
-            {publishError}
-          </p>
-        )}
-      </form>
-      </div>
-
-  </div>
+      <Footer />
     </div>
-    <Footer/>
-    </div>
-   
   );
 }
-
-
-

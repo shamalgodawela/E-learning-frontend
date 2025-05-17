@@ -85,7 +85,7 @@ const CreateGroup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Check if any error exists
     if (
       errors.name ||
@@ -97,15 +97,27 @@ const CreateGroup = () => {
       });
       return;
     }
-
+  
     try {
-      await axiosInstance.post("/groups/create", group);
+      const response = await fetch("http://localhost:8081/api/groups/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(group),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
       toast.success("Group created!", { position: "top-center" });
     } catch (err) {
       toast.error("Error creating group", { position: "top-center" });
       console.error(err);
     }
   };
+  
 
   return (
     <div>

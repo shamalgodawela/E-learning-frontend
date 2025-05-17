@@ -12,6 +12,7 @@ import UpdateGroup from "./pages/Groups/UpdateGroup";
 import Post from "./components/Post";
 import CreateSchedul from "./pages/Progress";
 import Myprogress from "./pages/Myprogress";
+import Updateprogress from "./pages/UpdateProgress";
 
 
 
@@ -44,6 +45,7 @@ export default function App() {
         <Route path="/post" element={<Post/>} />
         <Route path="/CreateProgress" element={<CreateSchedul/>} />
         <Route path="/viewprogreess" element={<Myprogress/>}/>
+        <Route path="/updateprogress/:workId" element={<Updateprogress/>}/>
 
        
 
