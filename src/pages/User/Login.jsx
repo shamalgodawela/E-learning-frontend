@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast, ToastContainer, Slide } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -10,17 +10,34 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  // Google Sign-In simulated handler
+  const handleGoogleResponse = () => {
+    toast.success("Google login successful (demo)", {
+      position: "top-center",
+      autoClose: 1500,
+      onClose: () => navigate("/post"),
+    });
+  };
+
+  useEffect(() => {
+    // Load Google Identity Services if needed (optional)
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-  
+
     try {
       const response = await axios.post("http://localhost:8081/api/auth/login", {
         email,
         password,
       });
-  
-      // Check for 200 OK response before processing
+
       if (response.status === 200 && response.data) {
         localStorage.setItem("token", response.data);
         toast.success("Login successful!", {
@@ -38,13 +55,12 @@ const Login = () => {
       console.error("Login failed:", err);
     }
   };
-  
-  
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4 py-10">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4 py-10">
       <div className="flex flex-col md:flex-row shadow-2xl rounded-3xl overflow-hidden max-w-4xl w-full backdrop-blur-xl bg-white/5 border border-slate-700">
 
-        {/* Left Image Slide */}
+        {/* Left Image */}
         <div className="md:w-1/2 hidden md:block">
           <img
             src="https://moxienola.com/wp-content/uploads/2021/07/eLearning-Graphic-scaled.jpg"
@@ -53,7 +69,7 @@ const Login = () => {
           />
         </div>
 
-        {/* Right Login Form */}
+        {/* Login Form */}
         <div className="md:w-1/2 w-full p-8 md:p-12">
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-white">Welcome Back</h1>
@@ -104,6 +120,27 @@ const Login = () => {
               Sign In
             </button>
           </form>
+
+          {/* Divider */}
+          <div className="flex items-center my-6">
+            <div className="flex-grow border-t border-slate-600"></div>
+            <span className="mx-3 text-slate-400 text-sm">or</span>
+            <div className="flex-grow border-t border-slate-600"></div>
+          </div>
+
+          {/* Google Button */}
+          <button
+            type="button"
+            onClick={handleGoogleResponse}
+            className="w-full bg-white text-slate-800 py-2 rounded-xl font-semibold transition duration-200 shadow-md flex items-center justify-center hover:bg-slate-100"
+          >
+            <img
+              src="https://storage.googleapis.com/gd-wagtail-prod-assets/original_images/evolving_google_identity_2x1.jpg"
+              alt="Google"
+              className="w-5 h-5 mr-2"
+            />
+            Sign in with Google
+          </button>
         </div>
       </div>
 

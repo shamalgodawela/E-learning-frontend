@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+
+
 export default function CreateSchedul() {
     const [formData, setFormData] = useState({
       _id:"",
@@ -15,7 +19,7 @@ export default function CreateSchedul() {
   const [publishError, setPublishError] = useState(null);
   const [Error, setError] = useState(null);
   const navigate = useNavigate();
-  console.log(formData._id)
+  console.log(formData)
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -91,17 +95,7 @@ export default function CreateSchedul() {
   };
 
  
-  const handleDateChange = (e) => {
-    const date = e.target.value.trim(); // Remove leading/trailing spaces
-    const datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/\d{2}$/;
-  
-    if (!datePattern.test(date)) {
-      setError("Invalid date format. Please use mm/dd/yy format.");
-    } else {
-      setFormData({ ...formData, wantdate: date });
-      setError(null); // Clear error message if date is valid
-    }
-  };
+
 
  
   
@@ -110,131 +104,126 @@ export default function CreateSchedul() {
   
 
   return (
-    <div className="relative ">
-
-
-<img src="https://images.pexels.com/photos/5965698/pexels-photo-5965698.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="" className="w-full h-[700px] opacity-95 object-cover " />
-
-<div className="absolute transform -translate-x-0 translate-y-0 top-1  ml-[800px] ">
-        <div className=" mt-2  ml-[-780px]">
-
-      
-      
-      <Link to="/Myschedul">
-        <button className="bg-gradient-to-r from-slate-500 to-blue-white   bg-opacity-80  w-32 h-10 border border-slate-300 shadow-xl rounded-lg text-white hover:opacity-85 ml-[800px]  font-extralight  text-opacity-75">My Progress</button>
-        </Link>
-        </div>
-        
-        
-      
-       
-      <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5">
-
-        
-          <div className="w-[550px] h-[600px] border bg-white bg-opacity-30 rounded-lg relative z-10 ">
-        <div className="flex justify-center items-center mt-6">
-          <form className="flex flex-col  gap-4" onSubmit={handleSubmit} >
-            
-         
-            
-            
-            <div>
-            <h3 className="font-semibold  ml-1 text-black">Course name</h3>
+    <div>
+      <Header/>
+    <div className="relative">
+    {/* Background Image */}
+    <img
+      src="https://images.pexels.com/photos/12960389/pexels-photo-12960389.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      alt="Workout background"
+      className="w-full h-[700px] object-cover opacity-95"
+    />
+  
+    {/* Top Right Button */}
+  
+  
+    {/* Form Container */}
+    <div className="absolute top-20 left-1/2 transform -translate-x-1/2 w-full max-w-3xl px-6">
+    <div className="max-h-[550px] overflow-y-auto px-6 pt-4 scrollbar-none">
+      <div className="bg-white bg-opacity-30 p-6 rounded-xl shadow-xl">
+        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+          
+          {/* Course Name */}
+          <div>
+            <label htmlFor="progressState" className="font-semibold text-black block mb-1">Course Name</label>
             <select
-               className=" bg-slate-100 p-3 bg-opacity-80 rounded-lg w-[200px] h-14"
-          
-            id="workoutState"
-            onChange={handleChange}
-            value={formData.progressState}
-            required
-          >
-             <option className="font-serif bg-opacity-80" value="">Select</option>
-             <option className="font-serif text-white bg-opacity-80" value="">Select</option>
-            <option value="Unlocking the Basics: A Beginner’s Guide">Unlocking the Basics: A Beginner’s Guide</option>
-            <option value="Foundations First: Learn the Essentials">Foundations First: Learn the Essentials</option>
-            <option value="Crash Course 101: Get Started Fast">Crash Course 101: Get Started Fast</option>
-    <option value="Skill Sprint: Learn in an Hour">Skill Sprint: Learn in an Hour</option>
-    <option value="Demo Masterclass: See It in Action">Demo Masterclass: See It in Action</option>
-    <option value="Try & Learn: Interactive Demo Course">Try & Learn: Interactive Demo Course</option>
-    <option value="QuickStart Demo: [Skill/Topic] Edition">QuickStart Demo:Edition</option>
-    <option value="Fast Track Fundamentals">Fast Track Fundamentals</option>
-    
-          </select>
-            </div>
-            <div>
-
-            <div>
-             <h3 className="font-semibold ml-1 text-black ">Start Date</h3>
-
-
-              <input
-               className=" bg-slate-100 p-3 bg-opacity-80 rounded-lg w-[460px] h-11"
-                type="text"
-                placeholder="mm/dd/yy(add new date)"
-                id="Date"
-                required
-                maxLength={80}
-              
-                onChange={handleDateChange}
-              />
-               {Error && (
-            <p className="mt-5 text-red-800 font-serif text-opacity-50  w-300 h-7 rounded-lg text-center ">
-              {Error}
-            </p>)}
-            </div>
-             <h3 className="font-semibold  ml-1 text-black">Description</h3>
-
-
-              <textarea
-               className=" bg-slate-100 p-3 bg-opacity-80 rounded-lg w-[460px] h-20"
-                type="text"
-                placeholder=""
-                id="description"
-                required
-                maxLength={80}
-              
-                onChange={handleChange}
-                value={formData.description}
-              />
-            </div>
-          
-            <div className="max-h-36 overflow-y-auto  scrollbar-none">
-            {formData.state.map((exercise, index) => (
+              id="progressState"
+              onChange={handleChange}
+              value={formData.progressState}
+              required
+              className="w-full md:w-[300px] p-3 rounded-lg bg-slate-100 bg-opacity-80"
+            >
+              <option value="">Select</option>
+              <option value="Unlocking the Basics: A Beginner’s Guide">Unlocking the Basics: A Beginner’s Guide</option>
+              <option value="Foundations First: Learn the Essentials">Foundations First: Learn the Essentials</option>
+              <option value="Crash Course 101: Get Started Fast">Crash Course 101: Get Started Fast</option>
+              <option value="Skill Sprint: Learn in an Hour">Skill Sprint: Learn in an Hour</option>
+              <option value="Demo Masterclass: See It in Action">Demo Masterclass: See It in Action</option>
+              <option value="Try & Learn: Interactive Demo Course">Try & Learn: Interactive Demo Course</option>
+              <option value="QuickStart Demo:Edition">QuickStart Demo: Edition</option>
+              <option value="Fast Track Fundamentals">Fast Track Fundamentals</option>
+            </select>
+          </div>
+  
+          {/* Start Date */}
+          <div>
+            <label htmlFor="date" className="font-semibold text-black block mb-1">Start Date</label>
+            <input
+              type="date"
+              id="date"
+              value={formData.date}
+              onChange={handleChange}
+              required
+              maxLength={80}
+              className="w-full p-3 rounded-lg bg-slate-100 bg-opacity-80"
+            />
+           
+          </div>
+  
+          {/* Description */}
+          <div>
+            <label htmlFor="description" className="font-semibold text-black block mb-1">Description</label>
+            <textarea
+              id="description"
+              placeholder="Enter workout description"
+              onChange={handleChange}
+              value={formData.description}
+              required
+              maxLength={80}
+              className="w-full h-24 p-3 rounded-lg bg-slate-100 bg-opacity-80 resize-none"
+            />
+          </div>
+  
+          {/* Progress Updates */}
+          <div>
+            <h3 className="text-xl font-serif text-black text-center bg-white bg-opacity-80 rounded-lg py-2">My Learning Progress</h3>
+            <div className="max-h-36 overflow-y-auto scrollbar-none mt-2 space-y-4">
+              {formData.state.map((exercise, index) => (
                 <div key={index}>
-                  <h3 className="font-semibold  ml-1 text-white">Day {index + 1}</h3>
-                  <div className="flex gap-4 mt-4">
-                    <input className="bg-slate-100 p-3 bg-opacity-80 rounded-lg w-[150px] h-11" type="text" value={exercise.name} placeholder="Enter description"  onChange={(e) => handleExerciseChange(index, "name", e.target.value)}    />
-                    <input className="bg-slate-100 p-3 bg-opacity-80 rounded-lg w-[130px] h-11" type="text" value={exercise.completed} placeholder="Enter hours" onChange={(e) => handleExerciseChange(index, "completed", e.target.value)}  />
-                    <input className="bg-slate-100 p-3 bg-opacity-80 rounded-lg w-[150px] h-11" type="text" value={exercise.burend_callary} placeholder="time per day" onChange={(e) => handleExerciseChange(index, "burend_callary", e.target.value)}  />
-                  </div>
+                  <label className="font-semibold text-black block mb-1">Day {index + 1}</label>
+                  <input
+                    type="text"
+                    placeholder="Enter description"
+                    value={exercise.name}
+                    onChange={(e) => handleExerciseChange(index, "name", e.target.value)}
+                    className="w-full md:w-[300px] p-3 rounded-lg bg-slate-100 bg-opacity-80"
+                  />
                 </div>
               ))}
-              </div>
-          
-          <button className=" bg-gradient-to-r from-slate-500 to-blue-white   bg-opacity-80 text-white border border-slate-300 shadow-xl shadow-slate-400 font-serif  text-opacity-90 p-3 rounded-lg w-[460px] h-11 hover:opacity-90" type="button" onClick={handleAddExercise}>Update Current progress</button>
+            </div>
+          </div>
+  
+          {/* Action Buttons */}
+          <div className="flex flex-col gap-4 mt-4">
             <button
-              className=" bg-gradient-to-r from-slate-500 to-blue-white   bg-opacity-80 text-white border border-slate-300 shadow-xl shadow-slate-400 font-serif  text-opacity-90 p-3 rounded-lg w-[460px] h-11 hover:opacity-90"
-              type="submit"
-             
+              type="button"
+              onClick={handleAddExercise}
+              className="w-full bg-gradient-to-r from-slate-500 to-white text-white font-serif p-3 rounded-lg border border-slate-300 shadow-xl hover:opacity-90"
             >
-             Update Workout
+              Update Current Progress
             </button>
-
+  
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-blue-700 to-white text-white font-serif p-3 rounded-lg border border-slate-300 shadow-xl hover:opacity-90"
+            >
+              Update Progress
+            </button>
+  
             {publishError && (
-            <p className="mt-5 text-red-800 font-serif text-opacity-50  w-300 h-7 rounded-lg text-center ">
-              {publishError}
-            </p>
-          )}
-          
-          </form>
-          
-         
-         
-        </div>
-        </div>
+              <p className="mt-2 text-red-700 text-center font-serif text-opacity-80">
+                {publishError}
+              </p>
+            )}
+          </div>
+        </form>
       </div>
       </div>
     </div>
+  </div>
+  <Footer/>
+  </div>
+  
   );
 }
 

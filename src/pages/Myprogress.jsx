@@ -65,121 +65,84 @@ export default function Myprogress() {
  
 
   return (
-    <div>
-      <Header/>
-    <div className=" relative">
-
-
-<div className="absolute transform -translate-x-0 translate-y-0 top-1  ml-6 ">
-
-
-
-     <div>
     
-    <div className="mt-4">
-    <Link to="/CreateProgress">
-        <button className="bg-gradient-to-r from-slate-500 to-blue-white bg-opacity-80  w-32 h-10 border border-slate-300 shadow-xl rounded-lg text-white hover:opacity-85 ml-[1240px]  font-extralight  text-opacity-75">New Progress</button>
+    
+<div>
+  <Header/>
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 p-6">
+      <div className="flex justify-end mb-6">
+        <Link to="/CreateProgress">
+          <button className="px-6 py-2 rounded-lg bg-gradient-to-r from-slate-600 to-blue-400 text-white shadow-lg hover:brightness-110 transition">
+            New Progress
+          </button>
         </Link>
-        </div>
-        
-        <div className="w-[640px] ml-[400px] h-[700px] mt-[-60px] bg-opacity-80 bg-[#d9d9da] "> 
-        <div className="flex justify-center items-center">
-      <h1 className="text-5xl font-serif text-slate-800 text-opacity-70 mt-6">
-        My progress
-      </h1>
-    </div>
-        <div className="max-h-[550px] w-full overflow-y-auto  scrollbar-none">
-    <div className="flex justify-center mt-4">
-      <div className="flex flex-wrap justify-center gap-8">
-        {workouts.map((workout) => (
-          <div
-            key={workout.id}
-            className="w-[600px] h-[620px] shadow-lg bg-white     mt-10 mb-5 border rounded-2xl relative z-10 "
-          >
-            <div className="px-6 py-4">
-                <div className="flex justify-center items-center  border rounded-xl  ">
-                <h2 className="font-extralight text-xl text-black  mb-2 truncate">
-                Cours name: {workout.ProgressState}
+      </div>
+
+      <div className="max-w-5xl mx-auto bg-white bg-opacity-90 rounded-3xl p-8 shadow-xl">
+        <h1 className="text-5xl font-serif text-slate-800 mb-8 text-center tracking-wide">
+          My Progress
+        </h1>
+
+        <div className="max-h-[600px] overflow-y-auto space-y-10 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+          {workouts.map((workout) => (
+            <div
+              key={workout.id}
+              className="bg-white rounded-2xl shadow-lg border border-gray-300 p-6 relative hover:shadow-2xl transition-shadow"
+            >
+              <h2 className="text-2xl font-semibold text-center text-slate-900 mb-4 truncate">
+                Course Name: {workout.progressState}
               </h2>
 
-                </div>
-              
-              <p className="font-semibold text-black ">Description</p>
-              <p className=" text-black text-[12px]  w-20px break-words">
-                 {workout.description}
-              </p>
-
-             
-              <div>
-                <p className="font-semibold text-xl text-black">
-                    Start Date
-                </p>
-              <p className="font-extralight text-xl text-black ">
-           
-             {moment(workout.date).format("YYYY-MM-DD HH:mm:ss")}
-              </p>
-
+              <div className="mb-4">
+                <p className="font-semibold text-lg text-slate-700 mb-1">Description:</p>
+                <p className="text-gray-600 text-sm whitespace-pre-wrap">{workout.description}</p>
               </div>
-             
-             
-              <div className="font-medium text-black text-opacity-70   h-10 ml-1 rounded-xl    mt-4 mb-2">
-             
-                <div className=" flex justify-center text-2xl font-serif   items-center  mt-4 cursor-pointer">
-              My Current learning progress
-                </div>
-               
-            
+
+              <div className="mb-6">
+                <p className="font-semibold text-lg text-slate-700">Start Date:</p>
+                <p className="text-gray-700">{moment(workout.date).format("YYYY-MM-DD HH:mm:ss")}</p>
               </div>
-              <div>
-              <div className="max-h-44 overflow-y-auto  scrollbar-none bg-slate-600 rounded-xl bg-opacity-10">
+
+              <h3 className="text-xl font-serif font-medium text-center text-slate-800 mb-4">
+                My Current Learning Progress
+              </h3>
+
+              <div className="max-h-48 overflow-y-auto bg-gray-50 rounded-xl p-4 space-y-3 scrollbar-thin scrollbar-thumb-gray-300">
                 {workout.state.map((state, index) => (
-                  <div key={index} className="gap-2 ml-4   rounded-xl  ">
-                    <div className="font-serif bg-slate-200 rounded-xl  text-black">
-                   <div className="ml-4"> Description:{state.name}</div>
-                    </div>
-                    <div className="font-medium text-slate-800">
-                    Studies Hours: {state.completed}
-                    </div>
-                    <div>
-
-                    <div className="font-medium text-slate-800">
-                    Per Day Study Times: {state.burend_callary}
-                   
-                    </div>
-                 </div>
-                <hr  className="text-black"/>
-
+                  <div
+                    key={index}
+                    className="bg-white p-3 rounded-lg shadow-sm border border-gray-200"
+                  >
+                    <p className="font-semibold text-slate-800">Description: {state.name}</p>
+                    <p className="text-slate-700">Study Hours: {state.completed}</p>
+                    <p className="text-slate-700">Per Day Study Times: {state.burend_callary}</p>
                   </div>
                 ))}
+              </div>
 
-                
-                </div>
-                <div className="flex justify-center mt-3 gap-10">
-                     
-                     <Link to={`/updateworkout/${workout.id}`}>
-                     <button className="text-lg bg-gradient-to-r from-slate-500 to-blue-white  border bg-opacity-80  hover:opacity-85 rounded-xl shadow-lg  w-20 text-black font-medium">Edit</button>
-                     </Link>
-                   
-                    <button  onClick={() => {
-                      setItemToDelete(workout.id);
-                      handleDeleteUser();
-                    }} className="text-lg bg-gradient-to-r from-slate-500 to-blue-white border  bg-opacity-80  hover:opacity-85 rounded-xl shadow-lg  w-20 text-black font-medium">Delete</button>
-                   
-
-                </div>
+              <div className="flex justify-center gap-8 mt-6">
+                <Link to={`/updateprogress/${workout.id}`}>
+                  <button className="px-5 py-2 bg-gradient-to-r from-slate-600 to-blue-400 text-white rounded-lg shadow-md hover:brightness-110 transition">
+                    Edit
+                  </button>
+                </Link>
+                <button
+                  onClick={() => {
+                    setItemToDelete(workout.id);
+                    handleDeleteUser();
+                  }}
+                  className="px-5 py-2 bg-gradient-to-r from-red-500 to-red-700 text-white rounded-lg shadow-md hover:brightness-110 transition"
+                >
+                  Delete
+                </button>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
+    <Footer/>
     </div>
-    </div>
-    </div>
-    </div>
-  </div>
-  <Footer/>
-  </div>
   );
 }
 

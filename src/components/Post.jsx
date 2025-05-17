@@ -136,211 +136,224 @@ export default function Post() {
   };
 
   return (
-    <div>
-      <Header/>
-    <div className="relative w-full">
-      <img
-        src="https://images.pexels.com/photos/5965698/pexels-photo-5965698.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-        alt=""
-        className="w-full h-[700px] opacity-95 object-cover"
-      />
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <Header />
 
-      <div className="absolute top-0 bg-[#d9d9da] bg-opacity-95 ml-[480px]">
-        {/* <Link to="/create">
-          <button className="bg-white bg-opacity-80 w-32 h-10 border mt-2 border-slate-300 shadow-xl rounded-lg text-black hover:opacity-85 font-extralight text-opacity-75">
-            New post
-          </button>
-        </Link>
-        <Link to="/CreateProgress">
-          <button className="bg-white bg-opacity-80 w-32 h-10 border mt-2 border-slate-300 shadow-xl rounded-lg text-black hover:opacity-85 font-extralight text-opacity-75">
-            new progress
-          </button>
-        </Link> */}
-
-        <div className="flex justify-center mt-0">
-          <div className="flex flex-wrap justify-center gap-8">
-            <div className="max-h-[655px] w-full overflow-y-auto scrollbar-none">
-              {workouts.map((workout) => (
-                <div
-                  key={workout.id}
-                  className="w-[550px] h-auto bg-white mt-10 mb-5 border-none rounded-2xl relative z-10"
-                >
-                  <div className="px-6 py-4">
-                    <div className="flex gap-3 ml-4">
-                      <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUA61gIlA_YnqrwGhxKIffyTO-f8B1V44Y9ypZDKV2pQ&s"
-                        alt=""
-                        className="w-10 h-10 object-cover mt-2 rounded-full"
-                      />
-
-                      <div>
-                        <h1 className="text-slate-800 font-medium mt-3">
-                          Ranyan123
-                        </h1>
-                        <h4 className="text-[10px] text-gray-800 whitespace-nowrap">
-                          {moment(workout.created).format(
-                            "YYYY-MM-DD HH:mm:ss"
-                          )}
-                        </h4>
-                      </div>
-
-                      <div className="flex gap-4 ml-72">
-                        <Link to={`/updatepost/${workout.id}`}>
-                          <img
-                            className="w-5 h-5"
-                            src="https://icons.veryicon.com/png/o/miscellaneous/linear-small-icon/edit-246.png"
-                          />
-                        </Link>
-                        <button className="mt-[-29px]" onClick={() => handleDeleteUser(workout.id)}>
-                          <img
-                            className="w-5 h-5"
-                            src="https://cdn.icon-icons.com/icons2/1157/PNG/512/1487086345-cross_81577.png"
-                          />
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-2 ml-4 mt-2">
-                      <div className="text-blue-700">#post#popular</div>
-                      <div className="text-gray-700">{workout.title}</div>
-                    </div>
-
-                    <img
-                      src={workout.image && workout.image[0]}
-                      alt=""
-                      className="w-[500px] h-80 mt-5 rounded-xl"
-                    />
-
-<div className=" flex gap-2 mt-4">
-                <div>
-               
-                <button className="mt-3 ml-1 " onClick={() => handleLike(workout.id)}> <FontAwesomeIcon icon={faHeart} className=" text-border hover:text-red-100 text-red-700 text-2xl" /></button>
-                <div className="ml-4 text-[10px]">{workout.likes}</div>
-                </div>
-            <button onClick={() => setSelectedPostId(workout.id)}>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT39MC8P4nQc7W1X59HDxu66eEfGlUfNURWjW7IIUuirA&s"  alt=""  className='w-8 h-8 object-cover mt-[-6px] rounded-full'/>
-            </button>
-             
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSRxA34bc9afVlpRRAEXhaHkX-KBdT9gn3CUaqJDXftA&s" onClick={() => handleShare(workout.id)}  alt=""  className='w-8 h-8 object-cover mt-2 rounded-full'/>
-             
-
-              </div>
-
-                    <div className="flex gap-2">
-                      <h3 className="font-semibold text-md text-gray-700 mt-4 mb-2">
-                        Ranyan
-                      </h3>
-                      <h3 className="font-extralight text-md text-gray-700 mt-5 w-[400px] break-words">
-                        {workout.content}
-                      </h3>
-                    </div>
-
-                    {selectedPostId === workout.id && (
-                      <div className="mt-2 flex">
-                        <input
-                          type="text"
-                          value={commentText}
-                          maxLength={20}
-                          onChange={(e) => setCommentText(e.target.value)}
-                          placeholder=" Comment..."
-                          className="w-[420px] ml-2 text-slate-700 h-10 rounded-full bg-slate-50"
-                        />
-                        <button
-                          className="ml-8 text-blue-700 font-medium"
-                          onClick={() =>
-                            handleComment(workout.id, commentText)
-                          }
-                        >
-                          Post
-                        </button>
-                      </div>
-                    )}
-
-                    <div className="w-[500px] min-h-[85px] rounded-2xl bg-slate-50 mt-4 p-2">
-                      <div className="flex ml-2 font-medium text-gray-400">
-                        Comment
-                      </div>
-                      <div className="max-h-20 overflow-y-auto scrollbar-none mt-2">
-                        {workout.comments.map((comment, index) => (
-                          <div key={index} className="ml-4 mt-2">
-                            {editingCommentId === comment.commentId ? (
-                              <div className="flex items-center gap-2">
-                                <input
-                                  type="text"
-                                  value={editedCommentText}
-                                  onChange={(e) =>
-                                    setEditedCommentText(e.target.value)
-                                  }
-                                  className="border rounded px-2 py-1 text-sm"
-                                />
-                                <button
-                                  onClick={() =>
-                                    handleEditComment(
-                                      workout.id,
-                                      comment.commentId
-                                    )
-                                  }
-                                  className="text-blue-500 text-xs"
-                                >
-                                  Save
-                                </button>
-                                <button
-                                  onClick={() => setEditingCommentId(null)}
-                                  className="text-gray-500 text-xs"
-                                >
-                                  Cancel
-                                </button>
-                              </div>
-                            ) : (
-                              <>
-                                <div className="text-sm text-gray-700">
-                                  {comment.comment}
-                                </div>
-                                <div className="text-[10px] text-gray-600">
-                                  {moment(comment.createdAt).fromNow()}
-                                </div>
-                                <div className="flex gap-2 text-xs mt-1">
-                                  <button
-                                    className="text-blue-500"
-                                    onClick={() => {
-                                      setEditingCommentId(comment.commentId);
-                                      setEditedCommentText(comment.comment);
-                                    }}
-                                  >
-                                    Edit
-                                  </button>
-                                  <button
-                                    className="text-red-500"
-                                    onClick={() =>
-                                      handleDeleteComment(
-                                        workout.id,
-                                        comment.commentId
-                                      )
-                                    }
-                                  >
-                                    Delete
-                                  </button>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+      <main className="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Hero image section */}
+        <div className="relative mb-12 rounded-lg overflow-hidden shadow-lg">
+          <img
+            src="https://images.pexels.com/photos/5965698/pexels-photo-5965698.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            alt="Hero"
+            className="w-full h-64 sm:h-96 object-cover opacity-90"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center">
+            <h1 className="text-white text-3xl sm:text-4xl font-semibold drop-shadow-lg">
+              Latest Posts
+            </h1>
           </div>
         </div>
-      </div>
+
+        {/* Posts list */}
+        <section className="space-y-8">
+          {workouts.map((workout) => (
+            <article
+              key={workout.id}
+              className="bg-white rounded-2xl shadow-md border border-gray-200 p-6"
+            >
+              {/* Post header */}
+              <header className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-4">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUA61gIlA_YnqrwGhxKIffyTO-f8B1V44Y9ypZDKV2pQ&s"
+                    alt="User avatar"
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <h2 className="font-semibold text-gray-900">Ranyan123</h2>
+                    <time
+                      dateTime={workout.created}
+                      className="text-sm text-gray-500"
+                    >
+                      {moment(workout.created).format("YYYY-MM-DD HH:mm:ss")}
+                    </time>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 text-gray-400">
+                  <Link
+                    to={`/updatepost/${workout.id}`}
+                    className="hover:text-blue-600"
+                    aria-label="Edit post"
+                  >
+                    <img
+                      className="w-6 h-6"
+                      src="https://icons.veryicon.com/png/o/miscellaneous/linear-small-icon/edit-246.png"
+                      alt="Edit"
+                    />
+                  </Link>
+                  <button
+                    onClick={() => handleDeleteUser(workout.id)}
+                    className="hover:text-red-600"
+                    aria-label="Delete post"
+                  >
+                    <img
+                      className="w-6 h-6"
+                      src="https://cdn.icon-icons.com/icons2/1157/PNG/512/1487086345-cross_81577.png"
+                      alt="Delete"
+                    />
+                  </button>
+                </div>
+              </header>
+
+              {/* Post tags and title */}
+              <div className="flex flex-wrap gap-3 mb-4">
+                <span className="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+                  #post
+                </span>
+                <span className="inline-block bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
+                  #popular
+                </span>
+                <h3 className="text-lg font-semibold text-gray-800">{workout.title}</h3>
+              </div>
+
+              {/* Post image */}
+              {workout.image && workout.image[0] && (
+                <img
+                  src={workout.image[0]}
+                  alt={workout.title}
+                  className="w-full max-h-96 object-cover rounded-lg mb-4"
+                />
+              )}
+
+              {/* Like and share buttons */}
+              <div className="flex items-center gap-6 mb-4">
+                <button
+                  onClick={() => handleLike(workout.id)}
+                  className="flex items-center gap-1 text-red-600 hover:text-red-700 transition"
+                  aria-label="Like post"
+                >
+                  <FontAwesomeIcon icon={faHeart} className="text-2xl" />
+                  <span className="text-sm font-medium">{workout.likes}</span>
+                </button>
+
+                <button
+                  onClick={() => setSelectedPostId(workout.id)}
+                  aria-label="Add comment"
+                  className="focus:outline-none"
+                >
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT39MC8P4nQc7W1X59HDxu66eEfGlUfNURWjW7IIUuirA&s"
+                    alt="Add comment"
+                    className="w-8 h-8 rounded-full object-cover hover:ring-2 hover:ring-blue-500 transition"
+                  />
+                </button>
+
+                <button
+                  onClick={() => handleShare(workout.id)}
+                  aria-label="Share post"
+                  className="focus:outline-none"
+                >
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSRxA34bc9afVlpRRAEXhaHkX-KBdT9gn3CUaqJDXftA&s"
+                    alt="Share"
+                    className="w-8 h-8 rounded-full object-cover hover:ring-2 hover:ring-blue-500 transition"
+                  />
+                </button>
+              </div>
+
+              {/* Post content */}
+              <p className="text-gray-700 mb-4 whitespace-pre-wrap">{workout.content}</p>
+
+              {/* Comment input */}
+              {selectedPostId === workout.id && (
+                <div className="flex items-center gap-4 mb-4">
+                  <input
+                    type="text"
+                    value={commentText}
+                    maxLength={200}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    placeholder="Write a comment..."
+                    className="flex-grow border border-gray-300 rounded-full px-4 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                  <button
+                    onClick={() => handleComment(workout.id, commentText)}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition"
+                  >
+                    Post
+                  </button>
+                </div>
+              )}
+
+              {/* Comments section */}
+              <section className="bg-gray-100 rounded-lg p-4 max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                <h4 className="text-gray-500 font-semibold mb-2">Comments</h4>
+                {workout.comments.length === 0 && (
+                  <p className="text-sm text-gray-400 italic">No comments yet.</p>
+                )}
+                {workout.comments.map((comment) => (
+                  <div key={comment.commentId} className="mb-3">
+                    {editingCommentId === comment.commentId ? (
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          value={editedCommentText}
+                          onChange={(e) => setEditedCommentText(e.target.value)}
+                          className="flex-grow border rounded px-3 py-1 text-sm"
+                        />
+                        <button
+                          onClick={() => handleEditComment(workout.id, comment.commentId)}
+                          className="text-blue-600 text-xs hover:underline"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => setEditingCommentId(null)}
+                          className="text-gray-500 text-xs hover:underline"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        <p className="text-gray-700 text-sm break-words">{comment.comment}</p>
+                        <div className="flex items-center justify-between text-xs text-gray-500 mt-0.5">
+                          <span>{moment(comment.createdAt).fromNow()}</span>
+                          <div className="flex gap-4">
+                            <button
+                              onClick={() => {
+                                setEditingCommentId(comment.commentId);
+                                setEditedCommentText(comment.comment);
+                              }}
+                              className="hover:text-blue-600"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteComment(workout.id, comment.commentId)}
+                              className="hover:text-red-600"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                ))}
+              </section>
+            </article>
+          ))}
+        </section>
+      </main>
+
       {notification && (
-        <div className="fixed bottom-4 right-4 z-50 bg-gray-200 border border-gray-300 rounded-md p-4 shadow-md">
-          <p className="text-sm">{notification}</p>
+        <div className="fixed bottom-6 right-6 z-50 bg-white border border-gray-300 rounded-lg p-4 shadow-lg text-sm text-gray-800">
+          {notification}
         </div>
       )}
-    </div>
-    <Footer/>
+
+      <Footer />
     </div>
   );
 }
